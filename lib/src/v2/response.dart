@@ -1,6 +1,6 @@
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v2/header.dart';
-import 'package:open_api_forked/src/v2/schema.dart';
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v2/header.dart';
+import 'package:open_api_plus/src/v2/schema.dart';
 
 /// Represents an HTTP response in the OpenAPI specification.
 class APIResponse extends APIObject {
@@ -10,6 +10,7 @@ class APIResponse extends APIObject {
   APISchemaObject? schema;
   Map<String, APIHeader?>? headers = {};
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -18,6 +19,7 @@ class APIResponse extends APIObject {
     headers = object.decodeObjectMap("headers", () => APIHeader());
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

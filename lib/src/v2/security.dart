@@ -1,6 +1,6 @@
-import 'package:codable_forked/cast.dart' as cast;
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v2/parameter.dart';
+import 'package:codable_plus/cast.dart' as cast;
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v2/parameter.dart';
 
 /// Represents a OAuth 2.0 security scheme flow in the OpenAPI specification.
 enum APISecuritySchemeFlow {
@@ -55,7 +55,7 @@ class APISecurityScheme extends APIObject {
   }
 
   APISecurityScheme.oauth2(this.oauthFlow,
-      {this.authorizationURL, this.tokenURL, this.scopes: const {}}) {
+      {this.authorizationURL, this.tokenURL, this.scopes = const {}}) {
     type = "oauth2";
   }
 
@@ -80,6 +80,7 @@ class APISecurityScheme extends APIObject {
   Map<String, cast.Cast> get castMap =>
       {"scopes": cast.Map(cast.String, cast.String)};
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -98,6 +99,7 @@ class APISecurityScheme extends APIObject {
     }
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

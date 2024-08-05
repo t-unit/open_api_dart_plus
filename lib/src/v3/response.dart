@@ -1,14 +1,14 @@
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v3/header.dart';
-import 'package:open_api_forked/src/v3/media_type.dart';
-import 'package:open_api_forked/src/v3/schema.dart';
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v3/header.dart';
+import 'package:open_api_plus/src/v3/media_type.dart';
+import 'package:open_api_plus/src/v3/schema.dart';
 
 /// Describes a single response from an API Operation, including design-time, static links to operations based on the response.
 class APIResponse extends APIObject {
   APIResponse.empty();
   APIResponse(this.description, {this.content, this.headers});
   APIResponse.schema(this.description, APISchemaObject schema,
-      {Iterable<String> contentTypes: const ["application/json"],
+      {Iterable<String> contentTypes = const ["application/json"],
       this.headers}) {
     content = contentTypes.fold<Map<String, APIMediaType?>>({}, (prev, elem) {
       prev[elem] = APIMediaType(schema: schema);
@@ -71,6 +71,7 @@ class APIResponse extends APIObject {
     }
   }
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -79,6 +80,7 @@ class APIResponse extends APIObject {
     headers = object.decodeObjectMap("headers", () => APIHeader());
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.1
+
+- fix many warnings
+- switch to codable_plus
+
 ## 3.0.0+6
 
 - add openIDConnect security scheme type.

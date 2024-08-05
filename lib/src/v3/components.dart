@@ -1,11 +1,11 @@
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v3/callback.dart';
-import 'package:open_api_forked/src/v3/header.dart';
-import 'package:open_api_forked/src/v3/parameter.dart';
-import 'package:open_api_forked/src/v3/request_body.dart';
-import 'package:open_api_forked/src/v3/response.dart';
-import 'package:open_api_forked/src/v3/schema.dart';
-import 'package:open_api_forked/src/v3/security.dart';
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v3/callback.dart';
+import 'package:open_api_plus/src/v3/header.dart';
+import 'package:open_api_plus/src/v3/parameter.dart';
+import 'package:open_api_plus/src/v3/request_body.dart';
+import 'package:open_api_plus/src/v3/response.dart';
+import 'package:open_api_plus/src/v3/schema.dart';
+import 'package:open_api_plus/src/v3/security.dart';
 
 /// Holds a set of reusable objects for different aspects of the OAS.
 ///
@@ -55,7 +55,7 @@ class APIComponents extends APIObject {
           "Invalid reference URI: does not begin with /components/");
     }
 
-    var namedMap = null;
+    dynamic namedMap;
     switch (segments[1]) {
       case "schemas":
         namedMap = schemas;
@@ -95,6 +95,7 @@ class APIComponents extends APIObject {
     return resolveUri(referenceURI) as T?;
   }
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -113,6 +114,7 @@ class APIComponents extends APIObject {
     callbacks = object.decodeObjectMap("callbacks", () => APICallback());
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

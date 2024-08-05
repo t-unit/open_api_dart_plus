@@ -1,6 +1,6 @@
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v3/operation.dart';
-import 'package:open_api_forked/src/v3/parameter.dart';
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v3/operation.dart';
+import 'package:open_api_plus/src/v3/parameter.dart';
 
 /// Describes the operations available on a single path.
 ///
@@ -51,6 +51,7 @@ class APIPath extends APIObject {
 
   // todo (joeconwaystk): alternative servers not yet implemented
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -68,15 +69,16 @@ class APIPath extends APIObject {
       "patch",
       "trace"
     ];
-    methodNames.forEach((methodName) {
+    for (var methodName in methodNames) {
       if (!object.containsKey(methodName)) {
-        return;
+        continue;
       }
       operations[methodName] =
           object.decodeObject(methodName, () => APIOperation.empty());
-    });
+    }
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

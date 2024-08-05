@@ -1,8 +1,8 @@
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v3/components.dart';
-import 'package:open_api_forked/src/v3/document.dart';
-import 'package:open_api_forked/src/v3/operation.dart';
-import 'package:open_api_forked/src/v3/parameter.dart';
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v3/components.dart';
+import 'package:open_api_plus/src/v3/document.dart';
+import 'package:open_api_plus/src/v3/operation.dart';
+import 'package:open_api_plus/src/v3/parameter.dart';
 
 enum APISecuritySchemeType {
   apiKey,
@@ -111,6 +111,7 @@ class APISecurityScheme extends APIObject {
   /// For openID only. REQUIRED if so.
   Uri? connectURL;
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -148,6 +149,7 @@ class APISecurityScheme extends APIObject {
     }
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 
@@ -212,17 +214,17 @@ class APISecurityScheme extends APIObject {
 class APISecuritySchemeOAuth2Flow extends APIObject {
   APISecuritySchemeOAuth2Flow.empty();
 
-  APISecuritySchemeOAuth2Flow.code(this.authorizationURL, this.tokenURL,
-      this.refreshURL, this.scopes);
+  APISecuritySchemeOAuth2Flow.code(
+      this.authorizationURL, this.tokenURL, this.refreshURL, this.scopes);
 
-  APISecuritySchemeOAuth2Flow.implicit(this.authorizationURL, this.refreshURL,
-      this.scopes);
+  APISecuritySchemeOAuth2Flow.implicit(
+      this.authorizationURL, this.refreshURL, this.scopes);
 
-  APISecuritySchemeOAuth2Flow.password(this.tokenURL, this.refreshURL,
-      this.scopes);
+  APISecuritySchemeOAuth2Flow.password(
+      this.tokenURL, this.refreshURL, this.scopes);
 
-  APISecuritySchemeOAuth2Flow.client(this.tokenURL, this.refreshURL,
-      this.scopes);
+  APISecuritySchemeOAuth2Flow.client(
+      this.tokenURL, this.refreshURL, this.scopes);
 
   /// The authorization URL to be used for this flow.
   ///
@@ -244,6 +246,7 @@ class APISecuritySchemeOAuth2Flow extends APIObject {
   /// REQUIRED. A map between the scope name and a short description for it.
   Map<String, String>? scopes;
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 
@@ -253,6 +256,7 @@ class APISecuritySchemeOAuth2Flow extends APIObject {
     object.encode("scopes", scopes);
   }
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -282,6 +286,7 @@ class APISecurityRequirement extends APIObject {
   /// If the security scheme is of type [APISecuritySchemeType.oauth2] or [APISecuritySchemeType.openID], then the value is a list of scope names required for the execution. For other security scheme types, the array MUST be empty.
   Map<String, List<String>> requirements = {};
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 
@@ -290,12 +295,13 @@ class APISecurityRequirement extends APIObject {
     });
   }
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
-    object.keys.forEach((key) {
+    for (var key in object.keys) {
       final req = List<String>.from(object.decode(key));
       requirements[key] = req;
-    });
+    }
   }
 }

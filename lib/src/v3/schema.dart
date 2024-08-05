@@ -1,6 +1,6 @@
-import 'package:codable_forked/cast.dart' as cast;
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v3/types.dart';
+import 'package:codable_plus/cast.dart' as cast;
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v3/types.dart';
 
 enum APISchemaAdditionalPropertyPolicy {
   /// When [APISchemaObject] prevents properties other than those defined by [APISchemaObject.properties] from being included
@@ -23,7 +23,7 @@ class APISchemaObject extends APIObject {
   APISchemaObject.integer() : type = APIType.integer;
   APISchemaObject.boolean() : type = APIType.boolean;
   APISchemaObject.map(
-      {APIType? ofType, APISchemaObject? ofSchema, bool any: false})
+      {APIType? ofType, APISchemaObject? ofSchema, bool any = false})
       : type = APIType.object {
     if (ofType != null) {
       additionalPropertySchema = APISchemaObject()..type = ofType;
@@ -47,7 +47,7 @@ class APISchemaObject extends APIObject {
     }
   }
   APISchemaObject.object(this.properties) : type = APIType.object;
-  APISchemaObject.file({bool isBase64Encoded: false})
+  APISchemaObject.file({bool isBase64Encoded = false})
       : type = APIType.string,
         format = isBase64Encoded ? "byte" : "binary";
 
@@ -249,6 +249,7 @@ class APISchemaObject extends APIObject {
   @override
   Map<String, cast.Cast> get castMap => {"required": cast.List(cast.String)};
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -305,6 +306,7 @@ class APISchemaObject extends APIObject {
     _deprecated = object.decode("deprecated");
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

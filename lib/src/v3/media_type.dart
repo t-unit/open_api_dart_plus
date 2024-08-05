@@ -1,6 +1,6 @@
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v3/encoding.dart';
-import 'package:open_api_forked/src/v3/schema.dart';
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v3/encoding.dart';
+import 'package:open_api_plus/src/v3/schema.dart';
 
 /// Each [APIMediaType] provides schema and examples for the media type identified by its key.
 class APIMediaType extends APIObject {
@@ -15,6 +15,7 @@ class APIMediaType extends APIObject {
   /// The key, being the property name, MUST exist in the schema as a property. The encoding object SHALL only apply to requestBody objects when the media type is multipart or application/x-www-form-urlencoded.
   Map<String, APIEncoding?>? encoding;
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -22,6 +23,7 @@ class APIMediaType extends APIObject {
     encoding = object.decodeObjectMap("encoding", () => APIEncoding());
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

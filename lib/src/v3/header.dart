@@ -1,6 +1,6 @@
-import 'package:codable_forked/codable.dart';
-import 'package:open_api_forked/src/v3/parameter.dart';
-import 'package:open_api_forked/src/v3/schema.dart';
+import 'package:codable_plus/codable.dart';
+import 'package:open_api_plus/src/v3/parameter.dart';
+import 'package:open_api_plus/src/v3/schema.dart';
 
 /// [APIHeader] follows the structure of the [APIParameter] with the following changes:
 ///

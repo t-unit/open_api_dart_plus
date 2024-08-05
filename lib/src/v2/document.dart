@@ -1,11 +1,11 @@
-import 'package:codable_forked/cast.dart' as cast;
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v2/metadata.dart';
-import 'package:open_api_forked/src/v2/parameter.dart';
-import 'package:open_api_forked/src/v2/path.dart';
-import 'package:open_api_forked/src/v2/response.dart';
-import 'package:open_api_forked/src/v2/schema.dart';
-import 'package:open_api_forked/src/v2/security.dart';
+import 'package:codable_plus/cast.dart' as cast;
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v2/metadata.dart';
+import 'package:open_api_plus/src/v2/parameter.dart';
+import 'package:open_api_plus/src/v2/path.dart';
+import 'package:open_api_plus/src/v2/response.dart';
+import 'package:open_api_plus/src/v2/schema.dart';
+import 'package:open_api_plus/src/v2/security.dart';
 
 /// Represents an OpenAPI 2.0 specification.
 class APIDocument extends APIObject {
@@ -46,6 +46,7 @@ class APIDocument extends APIObject {
         "security": cast.List(cast.Map(cast.String, cast.List(cast.String)))
       };
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -68,6 +69,7 @@ class APIDocument extends APIObject {
         "securityDefinitions", () => APISecurityScheme());
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 

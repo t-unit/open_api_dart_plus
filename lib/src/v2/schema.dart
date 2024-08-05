@@ -1,6 +1,6 @@
-import 'package:codable_forked/cast.dart' as cast;
-import 'package:codable_forked/codable.dart';
-import 'package:open_api_forked/src/v2/property.dart';
+import 'package:codable_plus/cast.dart' as cast;
+import 'package:codable_plus/codable.dart';
+import 'package:open_api_plus/src/v2/property.dart';
 
 /// Represents a schema object in the OpenAPI specification.
 class APISchemaObject extends APIProperty {
@@ -33,32 +33,34 @@ class APISchemaObject extends APIProperty {
   @override
   Map<String, cast.Cast> get castMap => {"required": cast.List(cast.String)};
 
-  void decode(KeyedArchive json) {
-    super.decode(json);
+  @override
+  void decode(KeyedArchive object) {
+    super.decode(object);
 
-    title = json.decode("title");
-    description = json.decode("description");
-    required = json.decode("required");
-    example = json.decode("example");
-    readOnly = json.decode("readOnly") ?? false;
+    title = object.decode("title");
+    description = object.decode("description");
+    required = object.decode("required");
+    example = object.decode("example");
+    readOnly = object.decode("readOnly") ?? false;
 
-    items = json.decodeObject("items", () => APISchemaObject());
+    items = object.decodeObject("items", () => APISchemaObject());
     additionalProperties =
-        json.decodeObject("additionalProperties", () => APISchemaObject());
-    properties = json.decodeObjectMap("properties", () => APISchemaObject());
+        object.decodeObject("additionalProperties", () => APISchemaObject());
+    properties = object.decodeObjectMap("properties", () => APISchemaObject());
   }
 
-  void encode(KeyedArchive json) {
-    super.encode(json);
+  @override
+  void encode(KeyedArchive object) {
+    super.encode(object);
 
-    json.encode("title", title);
-    json.encode("description", description);
-    json.encode("required", required);
-    json.encode("example", example);
-    json.encode("readOnly", readOnly);
+    object.encode("title", title);
+    object.encode("description", description);
+    object.encode("required", required);
+    object.encode("example", example);
+    object.encode("readOnly", readOnly);
 
-    json.encodeObject("items", items);
-    json.encodeObject("additionalProperties", additionalProperties);
-    json.encodeObjectMap("properties", properties);
+    object.encodeObject("items", items);
+    object.encodeObject("additionalProperties", additionalProperties);
+    object.encodeObjectMap("properties", properties);
   }
 }

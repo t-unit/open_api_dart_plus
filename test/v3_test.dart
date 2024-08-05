@@ -1,4 +1,4 @@
-import 'package:open_api_forked/v3.dart';
+import 'package:open_api_plus/v3.dart';
 import 'package:test/test.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -191,7 +191,7 @@ void main() {
 
   group("Security", () {
     test("Can parse security requirements", () {
-      final doc = new APIDocument.fromMap({
+      final doc = APIDocument.fromMap({
         "openapi": "3.0.0",
         "info": {"title": "x", "version": "1"},
         "paths": <String, dynamic>{

@@ -1,13 +1,13 @@
-import 'package:codable_forked/cast.dart' as cast;
-import 'package:open_api_forked/src/object.dart';
-import 'package:open_api_forked/src/v3/callback.dart';
-import 'package:open_api_forked/src/v3/parameter.dart';
-import 'package:open_api_forked/src/v3/request_body.dart';
-import 'package:open_api_forked/src/v3/response.dart';
-import 'package:open_api_forked/src/v3/security.dart';
-import 'package:open_api_forked/src/v3/path.dart';
-import 'package:open_api_forked/src/v3/document.dart';
-import 'package:open_api_forked/src/v3/server.dart';
+import 'package:codable_plus/cast.dart' as cast;
+import 'package:open_api_plus/src/object.dart';
+import 'package:open_api_plus/src/v3/callback.dart';
+import 'package:open_api_plus/src/v3/parameter.dart';
+import 'package:open_api_plus/src/v3/request_body.dart';
+import 'package:open_api_plus/src/v3/response.dart';
+import 'package:open_api_plus/src/v3/security.dart';
+import 'package:open_api_plus/src/v3/path.dart';
+import 'package:open_api_plus/src/v3/document.dart';
+import 'package:open_api_plus/src/v3/server.dart';
 
 /// Describes a single API operation on a path.
 class APIOperation extends APIObject {
@@ -76,13 +76,7 @@ class APIOperation extends APIObject {
   /// Declares this operation to be deprecated.
   ///
   /// Consumers SHOULD refrain from usage of the declared operation. Default value is false.
-  bool? get isDeprecated => _deprecated;
-
-  set isDeprecated(bool? f) {
-    _deprecated = f;
-  }
-
-  bool? _deprecated;
+  bool? isDeprecated;
 
   /// Returns the parameter named [name] or null if it doesn't exist.
   APIParameter? parameterNamed(String name) =>
@@ -135,6 +129,7 @@ class APIOperation extends APIObject {
   @override
   Map<String, cast.Cast> get castMap => {"tags": cast.List(cast.String)};
 
+  @override
   void decode(KeyedArchive object) {
     super.decode(object);
 
@@ -147,13 +142,14 @@ class APIOperation extends APIObject {
         object.decodeObject("requestBody", () => APIRequestBody.empty());
     responses = object.decodeObjectMap("responses", () => APIResponse.empty());
     callbacks = object.decodeObjectMap("callbacks", () => APICallback());
-    _deprecated = object.decode("deprecated");
+    isDeprecated = object.decode("deprecated");
     security =
         object.decodeObjects("security", () => APISecurityRequirement.empty());
     servers =
         object.decodeObjects("servers", () => APIServerDescription.empty());
   }
 
+  @override
   void encode(KeyedArchive object) {
     super.encode(object);
 
@@ -170,7 +166,7 @@ class APIOperation extends APIObject {
     object.encodeObject("requestBody", requestBody);
     object.encodeObjectMap("responses", responses);
     object.encodeObjectMap("callbacks", callbacks);
-    object.encode("deprecated", _deprecated);
+    object.encode("deprecated", isDeprecated);
     object.encodeObjects("security", security);
     object.encodeObjects("servers", servers);
   }

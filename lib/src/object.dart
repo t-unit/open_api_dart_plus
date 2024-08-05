@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
-import 'package:codable_forked/codable.dart';
+import 'package:codable_plus/codable.dart';
 
-export 'package:codable_forked/codable.dart';
+export 'package:codable_plus/codable.dart';
 
 class APIObject extends Coding {
   Map<String, dynamic> extensions = {};
@@ -12,18 +12,19 @@ class APIObject extends Coding {
     super.decode(object);
 
     final extensionKeys = object.keys.where((k) => k.startsWith("x-"));
-    extensionKeys.forEach((key) {
+    for (var key in extensionKeys) {
       extensions[key] = object.decode(key);
-    });
+    }
   }
 
+  @override
   @mustCallSuper
   void encode(KeyedArchive object) {
     final invalidKeys = extensions.keys
         .where((key) => !key.startsWith("x-"))
         .map((key) => "'$key'")
         .toList();
-    if (invalidKeys.length > 0) {
+    if (invalidKeys.isNotEmpty) {
       throw ArgumentError(
           "extension keys must start with 'x-'. The following keys are invalid: ${invalidKeys.join(", ")}");
     }
